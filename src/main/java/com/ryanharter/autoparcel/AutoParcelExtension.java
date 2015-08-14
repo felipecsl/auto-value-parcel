@@ -4,6 +4,7 @@ import com.google.auto.common.MoreTypes;
 import com.google.auto.value.AutoValueExtension;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -26,7 +27,7 @@ import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic;
 import java.util.*;
 
-public class AutoParcelExtension implements AutoValueExtension {
+public class AutoParcelExtension extends AutoValueExtension {
 
   Messager getMessager(Context context) {
     return context.processingEnvironment().getMessager();
@@ -42,7 +43,12 @@ public class AutoParcelExtension implements AutoValueExtension {
   }
 
   @Override
-  public boolean mustBeAtEnd(Context context) {
+  public Collection<String> consumeProperties(Context context) {
+    return Sets.newHashSet("describeContents", "writeToParcel");
+  }
+
+  @Override
+  public boolean mustBeFinal(Context context) {
     return true;
   }
 

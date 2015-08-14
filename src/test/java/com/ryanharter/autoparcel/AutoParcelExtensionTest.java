@@ -49,7 +49,7 @@ public class AutoParcelExtensionTest {
     processingEnvironment = new TestProcessingEnvironment(messager, elements, types);
   }
 
-  @Test public void throwsForNonParcelableProperty() throws Exception {
+  @Test public void throwsForNonSerializableProperty() throws Exception {
     TypeElement type = elements.getTypeElement(SampleTypeWithNonSerializable.class.getCanonicalName());
     AutoValueExtension.Context context = createContext(type);
 
@@ -138,7 +138,6 @@ public class AutoParcelExtensionTest {
         + "  return 0;\n"
         + "}\n");
   }
-
 
   private AutoValueExtension.Context createContext(TypeElement type) {
     String packageName = MoreElements.getPackage(type).getQualifiedName().toString();
